@@ -1,29 +1,17 @@
-import { useState } from 'react';
-
 import NewTodo from './components/NewTodo';
 import Todos from './components/Todos';
-import Todo from './models/todo';
+import TodosContextProvider from './store/todos-context';
+
 
 function App() {
-  //Staten ska vara en array med struktur från Class Todo i Todo model
-  const [todos, setTodos] = useState<Todo[]>([]);
-
-  const addTodoHandler = (todoText: string) => {
-    const newTodo = new Todo(todoText);
-
-    //Använder en callback från setTodo för att ta gammla värden och lägga till nya
-    setTodos((prevTodos) =>{
-      return prevTodos.concat(newTodo);
-    });
-
-  };
-
+ 
+  //Lägg TodosContextProvider runt alla components som ska använda den
   return (
-    <div>
-      <NewTodo onAddTodo={addTodoHandler} />
-      <Todos items={todos} />
+    <TodosContextProvider>
+      <NewTodo/>
+      <Todos/>
     
-    </div>
+    </TodosContextProvider>
   );
 }
 
